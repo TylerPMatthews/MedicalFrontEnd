@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Logo from "../Images/logo.png";
 import styled from "styled-components";
 import axios from "axios";
 import {Link, useHistory} from 'react-router-dom';
@@ -29,10 +28,10 @@ const StyledDiv = styled.div`
     margin-top: 5%;
     margin-bottom: 10%;
     background-color: #5aa637;
-    color: black;
+    color: white;
     &:hover {
       background-color: black;
-      color: white;
+      color: #5aa637;
       transition: 1s;
     }
     transition: 0.5s;
@@ -130,9 +129,7 @@ function Login() {
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className="logo">
-            <img src={Logo} alt={Logo} />
-          </div>
+        
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
