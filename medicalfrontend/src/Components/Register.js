@@ -41,9 +41,9 @@ const StyledDiv = styled.div`
     color: black;
     text-decoration:none;
   }
-  h5 {
-    color: #5aa637;
-    text-align: center;
+  h5{
+    color:#5aa637;
+    text-align:center;
   }
 `;
 
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      "url(https://images.unsplash.com/photo-1617101815456-0ee57e998d82?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)",
+      "url(https://images.unsplash.com/photo-1616690002031-c1a44eddd3bf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -99,6 +99,8 @@ function Login() {
   const initialFormValues = {
     user_username: "",
     user_password: "",
+    user_email: "",
+    user_account_type: 0,
   };
   const [values, setValues] = useState(initialFormValues);
   const {push} = useHistory()
@@ -113,13 +115,12 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:59283/auth/login", values)
+      .post("http://localhost:59283/auth/register", values)
       .then((res) => {
-        push("/home")
+        push("/login") 
       })
       .catch((err) => {
-        window.alert("Email or Password inncorect.")
-        console.log("Login error", err);
+        console.log("Register error", err);
       });
   };
 
@@ -137,13 +138,9 @@ function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Register
             </Typography>
-            <form
-              className={classes.form}
-              validate="true"
-              onSubmit={handleSubmit}
-            >
+            <form className={classes.form} validate='true' onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -154,7 +151,22 @@ function Login() {
                 onChange={handleChange}
                 label="Username"
                 required
+               
               />
+             
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="user_email"
+                name="user_email"
+                value={values.user_email}
+                onChange={handleChange}
+                required
+                label='Email'
+               
+              />
+            
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -174,11 +186,11 @@ function Login() {
                 variant="contained"
                 className={"submit"}
               >
-                Sign In
+                Register
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to='/register'>Don't have an account? Sign Up</Link>
+                  <Link to='/login'>Already have an account? Sign In</Link>
                 </Grid>
               </Grid>
               <Box mt={5}>
