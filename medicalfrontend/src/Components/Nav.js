@@ -6,18 +6,17 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: space-evenly;
   padding: 2.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   a {
     text-decoration: none;
     color: white;
     &:hover {
-      font-size: 1.1rem;
       transition: 1s;
       color: #5aa637;
     }
-    transition: 1s;
-    @media (min-width: 800px) {
-      font-size: 1.2rem;
+    transition: 0.5s;
+    @media (min-width: 700px) {
+      font-size: 1.3rem;
     }
   }
 `;
@@ -29,8 +28,8 @@ const StyledHeader = styled.header`
     justify-content: center;
   }
   .header_img img {
-    width: 15;
-    height: 15;
+    width: 20;
+    height: 20;
   }
 `;
 const Nav = () => {
@@ -43,7 +42,7 @@ const Nav = () => {
         <Link to="/">Home</Link>
         <Link to="/login">Sign In</Link>
         <Link to="/about">About Us</Link>
-        <Link to="/checkout">Checkout</Link>
+        <Link to="/cart">Cart</Link>
       </StyledNav>
     </StyledHeader>
   );

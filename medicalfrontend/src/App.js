@@ -5,6 +5,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
 import Nav from './Components/Nav';
+import GetProducts from './Components/GetProducts';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         </Route>
         <Route path="/">
           <Home />
+          <GetProducts/>
         </Route>
       </Switch>
     </div>
