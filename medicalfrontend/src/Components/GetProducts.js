@@ -4,10 +4,30 @@ import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { addToCartCount } from "../Actions/cartActions";
 
 const StyledDiv = styled.div`
-  margin: 2rem;
-  border-radius: 10px;
+  box-shadow: 2px 2px 18px;
+  color: #5aa637;
+  border: 1px solid black;
+  margin: 2.5rem;
+  @media (min-width: 700px) {
+    margin-left: 5rem;
+    margin-right: 5rem;
+  }
+  @media (min-width: 850px) {
+    margin-left: 8rem;
+    margin-right: 8rem;
+  }
+  @media (min-width: 1000px) {
+    margin-left: 18rem;
+    margin-right: 18rem;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 22rem;
+    margin-right: 22rem;
+  }
   text-align: center;
   font-size: 1.1rem;
   @media (min-width: 700px) {
@@ -22,7 +42,7 @@ const StyledDiv = styled.div`
   }
   @media (min-width: 1200px) {
     p {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
     }
   }
   .img_wrapper {
@@ -30,8 +50,8 @@ const StyledDiv = styled.div`
     justify-content: center;
   }
   img {
-    height: 15rem;
-    width: 15rem;
+    height: 17rem;
+    width: 17rem;
   }
   .content {
     background-color: black;
@@ -45,22 +65,21 @@ const StyledDiv = styled.div`
     color: #5aa637;
   }
   .price {
-    background-color: black;
-    color: white;
-    padding: 1.5rem;
+    background-color: white;
+    color: #5aa637;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
   }
   .price p {
-    display: inline;
     padding: 0.5rem;
     margin: 1rem;
-    border: 2px solid white;
     font-size: 1.4rem;
     text-align: center;
   }
   .price button {
     text-align: center;
     font-size: 1.2rem;
-    border: 2px solid white;
     &:hover {
       background-color: #5aa637;
       color: black;
@@ -69,22 +88,37 @@ const StyledDiv = styled.div`
     transition: 0.5s;
   }
   .price p:nth-of-type(1) {
-    color: green;
+    color: #5aa637;
+    border: 1px solid #5aa637;
   }
 
   .price p:nth-of-type(2) {
     color: red;
+    border: 2px solid #5aa637;
   }
   .add {
     color: #5aa637;
   }
+`;
+
+const StyledHead = styled.div`
   .sort_wrapper {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+  }
+  .sort_wrapper button {
+    color: #5aa637;
+    font-size: 0.7rem;
+    @media (min-width: 700px) {
+      font-size: 1rem;
+    }
+    @media (min-width: 1200px) {
+      font-size: 1.1rem;
+    }
   }
 `;
 
-const GetProducts = () => {
+const GetProducts = (props) => {
   const [items, setItems] = useState([]);
   const [initItems, setInitItems] = useState([]);
 
@@ -113,54 +147,56 @@ const GetProducts = () => {
         console.log("Sort error", err);
       });
   };
+  console.log(props.inCart);
   return (
-    <div>
+    <StyledHead>
       <div className="sort_wrapper">
-        <button
+        <Button
           onClick={() => {
             sortByType("flower");
           }}
         >
           Flower
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             sortByType("cart");
           }}
         >
           Carts
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             sortByType("edible");
           }}
         >
           Edibles
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             sortByType("concentrate");
           }}
         >
           Concentrates
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             sortByType("topical");
           }}
         >
           Topicals
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             setItems(initItems);
           }}
         >
           Clear
-        </button>
+        </Button>
       </div>
 
       {items.map((item, idx) => {
+        const alertItem = JSON.stringify(item.item_name);
         return (
           <StyledDiv key={idx}>
             <div className="card_wrapper">
@@ -176,8 +212,15 @@ const GetProducts = () => {
               </div>
               <div className="price">
                 <p>${item.item_price}</p>
-                <p>Stock: {item.inventory_count}</p>
-                <IconButton variant="outlined" className="add">
+                <IconButton
+                  variant="outlined"
+                  className="add"
+                  onClick={() => {
+                    props.addToCartCount();
+                    props.inCart.push(item);
+                    window.alert(`${alertItem} has been added to cart.`);
+                  }}
+                >
                   Add
                   <AddIcon />
                 </IconButton>
@@ -186,7 +229,13 @@ const GetProducts = () => {
           </StyledDiv>
         );
       })}
-    </div>
+    </StyledHead>
   );
 };
-export default GetProducts;
+const mapStateToProps = (state) => {
+  return {
+    inCart: state.cart.inCart,
+  };
+};
+
+export default connect(mapStateToProps, { addToCartCount })(GetProducts);

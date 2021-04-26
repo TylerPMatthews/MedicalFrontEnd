@@ -4,13 +4,13 @@ import { Switch, Route } from "react-router-dom";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
-import Nav from './Components/Nav';
-import GetProducts from './Components/GetProducts';
+import Nav from "./Components/Nav";
+import GetProducts from "./Components/GetProducts";
 
 function App() {
   return (
     <div className="App">
-      <Nav/>
+      <Nav />
       <Switch>
         <Route path="/register">
           <Register />
@@ -20,7 +20,7 @@ function App() {
         </Route>
         <Route path="/">
           <Home />
-          <GetProducts/>
+          <GetProducts />
         </Route>
       </Switch>
     </div>

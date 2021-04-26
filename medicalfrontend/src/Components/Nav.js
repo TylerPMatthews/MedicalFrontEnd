@@ -1,6 +1,9 @@
 import React from "react";
 import Logo from "../Images/logo.png";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
 const StyledNav = styled.nav`
   display: flex;
@@ -32,7 +35,7 @@ const StyledHeader = styled.header`
     height: 20;
   }
 `;
-const Nav = () => {
+const Nav = (props) => {
   return (
     <StyledHeader>
       <div className="header_img">
@@ -40,11 +43,19 @@ const Nav = () => {
       </div>
       <StyledNav>
         <Link to="/">Home</Link>
-        <Link to="/login">Sign In</Link>
+        <Link to="/login">Login</Link>
         <Link to="/about">About Us</Link>
-        <Link to="/cart">Cart</Link>
+        <Link to="/cart">
+          <ShoppingCartIcon /> {props.cartCount}
+        </Link>
       </StyledNav>
     </StyledHeader>
   );
 };
-export default Nav;
+const mapStateToProps = (state) => {
+  return {
+    cartCount: state.cart.cartCount,
+  };
+};
+
+export default connect(mapStateToProps)(Nav);
