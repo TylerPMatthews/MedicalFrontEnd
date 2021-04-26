@@ -11,8 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import axios from "axios";
-import {Link, useHistory} from 'react-router-dom';
-
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUsername, setUserID } from "../Actions/userActions";
+import { setLoggedIn } from "../Actions/loggedActions";
 //Styles
 const StyledDiv = styled.div`
   .logo {
@@ -38,7 +40,7 @@ const StyledDiv = styled.div`
   }
   a {
     color: black;
-    text-decoration:none;
+    text-decoration: none;
   }
   h5 {
     color: #5aa637;
@@ -93,14 +95,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function Login(props) {
   const classes = useStyles();
   const initialFormValues = {
     user_username: "",
     user_password: "",
   };
   const [values, setValues] = useState(initialFormValues);
-  const {push} = useHistory()
+  const history = useHistory();
 
   const handleChange = (e) => {
     setValues({
@@ -114,21 +116,23 @@ function Login() {
     axios
       .post("http://localhost:59283/auth/login", values)
       .then((res) => {
-        push("/")
+        props.setLoggedIn();
+        props.setUsername(res.data.user_username);
+        props.setUserID(res.data.user_id);
+        localStorage.setItem("token", res.data.token);
+        history.goBack()
       })
       .catch((err) => {
-        window.alert("Email or Password inncorect.")
+        window.alert("Email or Password inncorect.");
         console.log("Login error", err);
       });
   };
-
   return (
     <StyledDiv>
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -175,7 +179,7 @@ function Login() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to='/register'>Don't have an account? Sign Up</Link>
+                  <Link to="/register">Don't have an account? Sign Up</Link>
                 </Grid>
               </Grid>
               <Box mt={5}>
@@ -189,4 +193,15 @@ function Login() {
   );
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    user_username: state.user.user_username,
+    user_id: state.user.user_id,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setUsername,
+  setUserID,
+  setLoggedIn,
+})(Login);

@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import IconButton from "@material-ui/core/IconButton";
-import { removeFromCartCount } from "../Actions/cartActions";
+import { clearCartCount, clearCartItems } from "../Actions/cartActions";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 const StyledDiv = styled.div`
   text-align: center;
   font-size: 1.4rem;
@@ -84,18 +83,27 @@ const StyledCart = styled.div`
     transition: 0.5s;
   }
 `;
-const Cart = (props) => {
+const Checkout = (props) => {
   const { push } = useHistory();
   const total = props.inCart.reduce((n, { item_price }) => n + item_price, 0);
   const tax = Math.round(total * 0.07);
   const final = total + tax;
+  let nameArr = [];
+  props.inCart.map((item, idx) => {
+    nameArr.push(item.item_name);
+    return nameArr;
+  });
 
-  console.log(props.loggedIn);
+  const postData = {
+    order_product_names: nameArr,
+    order_price: final,
+    user_id: props.user_id,
+  };
 
   return (
     <>
       <StyledDiv>
-        <h3>Cart</h3>
+        <h3>Checkout</h3>
       </StyledDiv>
       <StyledCart>
         {props.inCart.map((item, idx) => {
@@ -106,18 +114,6 @@ const Cart = (props) => {
               </div>
               <div className="name_wrapper">
                 <p>{item.item_name}</p>
-                <p>$ {item.item_price}</p>
-              </div>
-              <div>
-                <IconButton
-                  onClick={() => {
-                    let index = idx;
-                    props.inCart.splice(index, 1);
-                    props.removeFromCartCount();
-                  }}
-                >
-                  <RemoveShoppingCartIcon />
-                </IconButton>
               </div>
             </div>
           );
@@ -129,25 +125,24 @@ const Cart = (props) => {
         </div>
 
         <div className="checkout">
-          {props.loggedIn === true ? (
-            <Button
-              variant="outlined"
-              onClick={() => {
-                push("/checkoutform");
-              }}
-            >
-              Checkout
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              onClick={() => {
-                push("/login");
-              }}
-            >
-              Login
-            </Button>
-          )}
+          <Button
+            variant="outlined"
+            onClick={() => {
+              axios
+                .post("http://localhost:59283/users/orders", postData)
+                .then((res) => {
+                  props.clearCartCount();
+                  props.clearCartItems();
+                  window.alert("Order has been submitted!");
+                  push("/");
+                })
+                .catch((err) => {
+                  console.log("New order POST error", err);
+                });
+            }}
+          >
+            Submit Order
+          </Button>
         </div>
       </StyledCart>
     </>
@@ -155,10 +150,11 @@ const Cart = (props) => {
 };
 const mapStateToProps = (state) => {
   return {
-    cartCount: state.cart.cartCount,
     inCart: state.cart.inCart,
-    loggedIn: state.logged.loggedIn,
+    user_id: state.user.user_id,
   };
 };
 
-export default connect(mapStateToProps, { removeFromCartCount })(Cart);
+export default connect(mapStateToProps, { clearCartCount, clearCartItems })(
+  Checkout
+);

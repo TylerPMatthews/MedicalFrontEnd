@@ -147,7 +147,7 @@ const GetProducts = (props) => {
         console.log("Sort error", err);
       });
   };
-  console.log(props.inCart);
+
   return (
     <StyledHead>
       <div className="sort_wrapper">
