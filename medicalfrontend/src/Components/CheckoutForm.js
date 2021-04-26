@@ -60,7 +60,9 @@ function CheckoutForm(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:59283/users/information/${props.user_id}`)
+      .get(
+        `https://medical-cannabis-backend.herokuapp.com/users/information/${props.user_id}`
+      )
       .then((res) => {
         res.data.length === 0 ? <div></div> : setValues(res.data[0]);
         setLoadValue(res.data[0]);
@@ -81,7 +83,10 @@ function CheckoutForm(props) {
     e.preventDefault();
     loadValue === undefined
       ? axios
-          .post("http://localhost:59283/users/information", values)
+          .post(
+            "https://medical-cannabis-backend.herokuapp.com/users/information",
+            values
+          )
           .then((res) => {
             push("/checkout");
           })
@@ -90,7 +95,7 @@ function CheckoutForm(props) {
           })
       : axios
           .put(
-            `http://localhost:59283/users/information/${loadValue.information_id}`,
+            `https://medical-cannabis-backend.herokuapp.com/users/information/${loadValue.information_id}`,
             values
           )
           .then((res) => {

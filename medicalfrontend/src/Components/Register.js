@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import axios from "axios";
-import {Link, useHistory} from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 
 //Styles
 const StyledDiv = styled.div`
@@ -38,11 +38,11 @@ const StyledDiv = styled.div`
   }
   a {
     color: black;
-    text-decoration:none;
+    text-decoration: none;
   }
-  h5{
-    color:#5aa637;
-    text-align:center;
+  h5 {
+    color: #5aa637;
+    text-align: center;
   }
 `;
 
@@ -102,7 +102,7 @@ function Login() {
     user_account_type: 0,
   };
   const [values, setValues] = useState(initialFormValues);
-  const {push} = useHistory()
+  const { push } = useHistory();
 
   const handleChange = (e) => {
     setValues({
@@ -114,9 +114,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:59283/auth/register", values)
+      .post("https://medical-cannabis-backend.herokuapp.com/auth/register", values)
       .then((res) => {
-        push("/login") 
+        push("/login");
       })
       .catch((err) => {
         console.log("Register error", err);
@@ -129,7 +129,6 @@ function Login() {
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -137,7 +136,11 @@ function Login() {
             <Typography component="h1" variant="h5">
               Register
             </Typography>
-            <form className={classes.form} validate='true' onSubmit={handleSubmit}>
+            <form
+              className={classes.form}
+              validate="true"
+              onSubmit={handleSubmit}
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -148,9 +151,8 @@ function Login() {
                 onChange={handleChange}
                 label="Username"
                 required
-               
               />
-             
+
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -160,10 +162,9 @@ function Login() {
                 value={values.user_email}
                 onChange={handleChange}
                 required
-                label='Email'
-               
+                label="Email"
               />
-            
+
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -187,7 +188,7 @@ function Login() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to='/login'>Already have an account? Sign In</Link>
+                  <Link to="/login">Already have an account? Sign In</Link>
                 </Grid>
               </Grid>
               <Box mt={5}>

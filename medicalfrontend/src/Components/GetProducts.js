@@ -124,7 +124,7 @@ const GetProducts = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:59283/viewproducts")
+      .get("https://medical-cannabis-backend.herokuapp.com/viewproducts")
       .then((res) => {
         setItems(res.data);
         setInitItems(res.data);
@@ -139,7 +139,10 @@ const GetProducts = (props) => {
       item_type: type,
     };
     axios
-      .post("http://localhost:59283/viewproducts/type", data)
+      .post(
+        "https://medical-cannabis-backend.herokuapp.com/viewproducts/type",
+        data
+      )
       .then((res) => {
         setItems(res.data);
       })

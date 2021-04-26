@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { removeFromCartCount } from "../Actions/cartActions";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+
+//Styles
 const StyledDiv = styled.div`
   text-align: center;
   font-size: 1.4rem;
@@ -85,12 +87,14 @@ const StyledCart = styled.div`
   }
 `;
 const Cart = (props) => {
+  //push to new page
   const { push } = useHistory();
+  //Find total
   const total = props.inCart.reduce((n, { item_price }) => n + item_price, 0);
+  //Find tax
   const tax = Math.round(total * 0.07);
+  //Add total + tax
   const final = total + tax;
-
-  console.log(props.loggedIn);
 
   return (
     <>

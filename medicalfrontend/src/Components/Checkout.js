@@ -84,16 +84,21 @@ const StyledCart = styled.div`
   }
 `;
 const Checkout = (props) => {
+  //Push to new page
   const { push } = useHistory();
+  //Total
   const total = props.inCart.reduce((n, { item_price }) => n + item_price, 0);
+  //Tax
   const tax = Math.round(total * 0.07);
+  //Total + Tax
   const final = total + tax;
+  //Get item names
   let nameArr = [];
   props.inCart.map((item, idx) => {
     nameArr.push(item.item_name);
     return nameArr;
   });
-
+  //Data to post to DB
   const postData = {
     order_product_names: nameArr,
     order_price: final,
@@ -129,7 +134,10 @@ const Checkout = (props) => {
             variant="outlined"
             onClick={() => {
               axios
-                .post("http://localhost:59283/users/orders", postData)
+                .post(
+                  "https://medical-cannabis-backend.herokuapp.com/users/orders",
+                  postData
+                )
                 .then((res) => {
                   props.clearCartCount();
                   props.clearCartItems();

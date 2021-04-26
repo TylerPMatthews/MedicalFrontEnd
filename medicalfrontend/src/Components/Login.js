@@ -114,13 +114,13 @@ function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:59283/auth/login", values)
+      .post("https://medical-cannabis-backend.herokuapp.com/auth/login", values)
       .then((res) => {
         props.setLoggedIn();
         props.setUsername(res.data.user_username);
         props.setUserID(res.data.user_id);
         localStorage.setItem("token", res.data.token);
-        history.goBack()
+        history.goBack();
       })
       .catch((err) => {
         window.alert("Email or Password inncorect.");

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
+//Styles
 const StyledDiv = styled.div`
-text-align:center;
+  text-align: center;
   h3 {
     text-align: center;
     font-size: 1.4rem;
@@ -20,9 +20,9 @@ text-align:center;
       font-size: 2rem;
     }
   }
-  a{
-    text-decoration:none;
-    color:#5aa637;
+  a {
+    text-decoration: none;
+    color: #5aa637;
   }
 `;
 const About = () => {
