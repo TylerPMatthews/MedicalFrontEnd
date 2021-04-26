@@ -172,6 +172,7 @@ const GetProducts = () => {
                 <p>{item.item_name}</p>
                 <p>THC {item.item_thc}%</p>
                 <p>CBD {item.item_cbd}%</p>
+                <p>Type: {item.item_type}</p>
               </div>
               <div className="price">
                 <p>${item.item_price}</p>
