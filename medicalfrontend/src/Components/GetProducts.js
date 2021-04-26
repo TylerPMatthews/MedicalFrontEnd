@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
+import AddIcon from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
+
 const StyledDiv = styled.div`
   margin: 2rem;
   border-radius: 10px;
@@ -51,8 +53,20 @@ const StyledDiv = styled.div`
     display: inline;
     padding: 0.5rem;
     margin: 1rem;
-    border: 1px solid white;
+    border: 2px solid white;
     font-size: 1.4rem;
+    text-align: center;
+  }
+  .price button {
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    &:hover {
+      background-color: #5aa637;
+      color: black;
+      transition: 1s;
+    }
+    transition: 0.5s;
   }
   .price p:nth-of-type(1) {
     color: green;
@@ -61,26 +75,91 @@ const StyledDiv = styled.div`
   .price p:nth-of-type(2) {
     color: red;
   }
-.add{
-  color:#5aa637;
-}
+  .add {
+    color: #5aa637;
+  }
+  .sort_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+  }
 `;
 
 const GetProducts = () => {
   const [items, setItems] = useState([]);
-  console.log(items);
+  const [initItems, setInitItems] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost:59283/viewproducts")
       .then((res) => {
         setItems(res.data);
+        setInitItems(res.data);
       })
       .catch((err) => {
         console.log("Get products error", err);
       });
   }, []);
+
+  const sortByType = (type) => {
+    const data = {
+      item_type: type,
+    };
+    axios
+      .post("http://localhost:59283/viewproducts/type", data)
+      .then((res) => {
+        setItems(res.data);
+      })
+      .catch((err) => {
+        console.log("Sort error", err);
+      });
+  };
   return (
     <div>
+      <div className="sort_wrapper">
+        <button
+          onClick={() => {
+            sortByType("flower");
+          }}
+        >
+          Flower
+        </button>
+        <button
+          onClick={() => {
+            sortByType("cart");
+          }}
+        >
+          Carts
+        </button>
+        <button
+          onClick={() => {
+            sortByType("edible");
+          }}
+        >
+          Edibles
+        </button>
+        <button
+          onClick={() => {
+            sortByType("concentrate");
+          }}
+        >
+          Concentrates
+        </button>
+        <button
+          onClick={() => {
+            sortByType("topical");
+          }}
+        >
+          Topicals
+        </button>
+        <button
+          onClick={() => {
+            setItems(initItems);
+          }}
+        >
+          Clear
+        </button>
+      </div>
+
       {items.map((item, idx) => {
         return (
           <StyledDiv key={idx}>
@@ -97,10 +176,11 @@ const GetProducts = () => {
               <div className="price">
                 <p>${item.item_price}</p>
                 <p>Stock: {item.inventory_count}</p>
-                <IconButton variant='outlined' className='add'><AddShoppingCartIcon/></IconButton>
+                <IconButton variant="outlined" className="add">
+                  Add
+                  <AddIcon />
+                </IconButton>
               </div>
-          
-             
             </div>
           </StyledDiv>
         );
