@@ -3,7 +3,6 @@ import Logo from "../Images/logo.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
 const StyledNav = styled.nav`
   display: flex;
