@@ -13,6 +13,7 @@ const StyledDiv = styled.div`
   font-size: 1.4rem;
   margin: 2rem;
   border: 1px solid black;
+  padding:1rem;
   @media (min-width: 700px) {
     font-size: 1.6rem;
   }
@@ -52,6 +53,7 @@ const StyledCart = styled.div`
 
   .total {
     margin: 2rem;
+    padding:1rem;
   }
   .total p {
     font-size: 1.2rem;
