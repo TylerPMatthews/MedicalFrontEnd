@@ -53,7 +53,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://medical-front-end.vercel.app">
         Green Orchard
       </Link>{" "}
       {new Date().getFullYear()}
