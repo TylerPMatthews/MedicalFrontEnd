@@ -41,6 +41,7 @@ const StyledCart = styled.div`
   }
   .name_wrapper p {
     font-size: 1.5rem;
+    margin:1rem;
   }
   .name_wrapper p:nth-of-type(2) {
     color: #5aa637;
