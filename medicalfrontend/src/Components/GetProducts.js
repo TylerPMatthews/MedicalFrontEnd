@@ -189,17 +189,16 @@ const GetProducts = (props) => {
         >
           Topicals
         </Button>
-
       </div>
       <div className="sort_wrapper">
-     <Button
+        <Button
           onClick={() => {
             setItems(initItems);
           }}
         >
           Clear
         </Button>
-     </div>
+      </div>
 
       {items.map((item, idx) => {
         const alertItem = JSON.stringify(item.item_name);
