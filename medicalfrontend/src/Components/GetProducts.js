@@ -8,9 +8,9 @@ import { connect } from "react-redux";
 import { addToCartCount } from "../Actions/cartActions";
 
 const StyledDiv = styled.div`
-  box-shadow: 2px 2px 18px;
+  box-shadow: 4px 1px 15px 2px;
   color: #5aa637;
-  border: 1px solid black;
+  border-radius: 20px;
   margin: 2.5rem;
   @media (min-width: 700px) {
     margin-left: 5rem;
@@ -70,6 +70,7 @@ const StyledDiv = styled.div`
     padding: 0.5rem;
     display: flex;
     justify-content: center;
+    border-radius: 20px;
   }
   .price p {
     padding: 0.5rem;
