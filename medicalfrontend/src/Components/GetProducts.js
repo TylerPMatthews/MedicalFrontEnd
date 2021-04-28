@@ -104,7 +104,11 @@ const StyledDiv = styled.div`
 const StyledHead = styled.div`
   .sort_wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    @media (min-width: 800px){
+      justify-content: center;  
+    }
+
   }
   .sort_wrapper button {
     color: #5aa637;
