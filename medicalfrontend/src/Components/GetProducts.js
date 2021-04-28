@@ -104,11 +104,7 @@ const StyledDiv = styled.div`
 const StyledHead = styled.div`
   .sort_wrapper {
     display: flex;
-    justify-content: space-evenly;
-    @media (min-width: 800px){
-      justify-content: center;  
-    }
-
+    justify-content: center;
   }
   .sort_wrapper button {
     color: #5aa637;
@@ -193,13 +189,15 @@ const GetProducts = (props) => {
         >
           Topicals
         </Button>
-        <Button
+     <div>
+     <Button
           onClick={() => {
             setItems(initItems);
           }}
         >
           Clear
         </Button>
+     </div>
       </div>
 
       {items.map((item, idx) => {
