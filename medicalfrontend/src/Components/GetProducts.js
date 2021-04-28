@@ -189,7 +189,9 @@ const GetProducts = (props) => {
         >
           Topicals
         </Button>
-     <div>
+
+      </div>
+      <div className="sort_wrapper">
      <Button
           onClick={() => {
             setItems(initItems);
@@ -198,7 +200,6 @@ const GetProducts = (props) => {
           Clear
         </Button>
      </div>
-      </div>
 
       {items.map((item, idx) => {
         const alertItem = JSON.stringify(item.item_name);
